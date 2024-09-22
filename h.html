@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            width: 100%;
+            overflow-x: hidden;
+        }
+        .container{
+            width: 60%;
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            row-gap: 15px;
+            column-gap: 15px;
+            border: 2px solid grey;
+            background-color: #fff;
+        }
+        .container .img img{
+            width: 250px;
+            height: auto;
+        }
+        .container-fluid{
+            background-color: burlywood;
+            display: flex;
+        }
+        .container-fluid .container img{
+            width: 100%;
+            cursor: pointer;
+            filter: grayscale(100%);
+        }
+        .container-fluid img:hover{
+            filter: grayscale(0%);
+        }
+        .module{
+            border: 3px solid black;
+            height: max-content;
+            width: max-content;
+            padding: 3rem;
+            height: 500px;
+            width: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .imgbox{
+            background-color: blueviolet;
+            height: 260px;
+            width: 260px;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: grayscale(0%);
+        }
+        .imgbox img{
+            width: 100%;
+            height: auto;
+        }
+        button{
+            padding: 10px;
+            background-color: transparent;
+            border: 2px solid black;
+            width: 40%;
+        }
+        .btns{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .close{
+            padding-right: 10px;
+            font-weight: 500;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
+        p{
+            background-color: black;
+            color: white;
+            height: 30px;
+            width: 30px;
+            display: flex;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            var imgContaienr = [...document.getElementsByClassName('img')];
+            var count = 0;
+            // $("#module").hide();
+            $("img").click(function(e){
+                // $("#module").show();
+                $("#container").attr("src", e.target.src);
+                count = Number(e.target.id);
+                console.log('c:', count);
+            })
+            var m = 0;
+            $(".next").click(function(e){
+                console.log('cb:', count, m);
+                let imgSS = [...e.target.parentElement.parentElement.parentElement.getElementsByClassName('img')]
+                if(count === (imgSS.length-1)){
+                    count = 0;
+                    m = count;
+                    $('#container').attr("src", imgSS[m].src);
+                }
+                else{
+                    count++;
+                    m = count;
+                    $('#container').attr("src", imgSS[m].src);
+                    console.log(imgSS[m].src, m, "c:", count);
+                }
+            })
+            $(".prev").click((e)=>{
+                let imgSS = [...e.target.parentElement.parentElement.parentElement.getElementsByClassName('img')]
+                if(m <= 0 || count <= 0){
+                    m = imgSS.length;
+                    count = imgSS.length;
+                }
+                count--;
+                m=count;
+                $('#container').attr("src", imgSS[(m)].src);
+                console.log(imgSS[m].src, m, "c:", count);
+            })
+            $(".close").click(function(){
+                $("#module").hide();
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="container">
+            <img id="0" class="img" src="images/app-dev.png" alt="">
+            <img id="1" class="img" src="images/design-tools.png" alt="">
+            <img id="2" class="img" src="images/head.jpg" alt="">
+            <img id="3" class="img" src="images/jshelpdesk.png" alt="">
+            <img id="4" class="img" src="images/jobportal.png" alt="">
+        </div>
+        <div class="module" id="module">
+            <div class="close">
+                <p>x</p>
+            </div>
+            <div class="imgbox">
+                <img class="clickImg" src="" id="container">
+            </div>
+            <!-- <div class="containerr" id="container"> -->      
+                <div class="btns">
+                    <button class="prev" id="-1">Prv</button>
+                    <button class="next" id="1">Nxt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
